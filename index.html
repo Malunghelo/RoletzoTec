@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/f2f54baf31.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cart.css">
+    <title>RGT - Real IT Solution</title>
+    <style>
+        /* Add hover and active link styling */
+        .navbar a:hover,
+        .navbar a.active {
+            background-color: #ffffff; /* Example hover/active background color */
+            color: #000000; /* Example hover/active text color */
+            padding: 8px 12px; /* Example padding to match hover effect */
+            margin-right: 5px;
+            border-radius: 4px; /* Example border radius to match hover effect */
+            transition: all 0.3s ease; /* Smooth transition */
+        }
+
+        /* Existing styles... */
+        .content-section { display: none; }
+        .hide-elements .dropdown, .hide-elements .search, .hide-elements .cart { display: none; }
+        .header { transition: height 0.3s ease; }
+        .hidden { display: none; }
+        .header.shrink { height: 100px; }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <p><i class="fa-solid fa-envelope"></i> rolekzotrading@gmail.com</p>
+        <p><i class="fa-solid fa-phone"></i>+27 76 309 9830</p>
+    </div>
+
+    <div class="header">
+        <div class="navbar">
+            <img src="assets/RGT.jpg" alt="Logo" class="logo" width="120" height="70">
+            <ul>
+                <li><a href="#home" data-target="content-home">Home</a></li>
+                <li><a href="#repair" data-target="content-repair">Repair</a></li>
+                <li><a href="#about" data-target="content-about">About</a></li>
+                <li><a href="#contact" data-target="content-contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div class="navbar-b" id="navbar-b">
+            <div class="dropdown">
+                <select id="dropdown">
+                    <option value="1">All</option>
+                    <option value="2">New</option>
+                    <option value="3">Preowned</option>
+                </select>
+            </div>
+            <div class="search">
+                <input type="search" placeholder="Search...">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+            <div class="cart"><i class="fa-solid fa-cart-shopping"></i><p>0</p></div>
+        </div>
+    </div>
+
+    <!-- Content Sections -->
+    <div id="content-home" class="content-section">
+        <h2>Home</h2>
+        <p>This is the content for the Home section.</p>
+    </div>
+
+    <div id="content-repair" class="content-section">
+        <h2>Repair</h2>
+        <p>This is the content for the Repair section.</p>
+    </div>
+
+    <div id="content-about" class="content-section">
+        <h2>About</h2>
+        <p>This is the content for the About section.</p>
+    </div>
+
+    <div id="content-contact" class="content-section">
+        <h2>Contact</h2>
+        <p>This is the content for the Contact section.</p>
+    </div>
+
+    <div id="content-all" class="content-section">
+        <h2>All Items</h2>
+        <p>This is the content for "All" items.</p>
+    </div>
+
+    <div id="content-new" class="content-section">
+        <h2>New Items</h2>
+        <p>This is the content for "New" items.</p>
+    </div>
+
+    <div id="content-preowned" class="content-section">
+        <h2>Preowned Items</h2>
+        <p>This is the content for "Preowned" items.</p>
+    </div>
+
+    <script>
+        // Function to hide all content sections
+        function hideAllSections() {
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+        }
+
+        // Function to show a specific content section and update the URL
+        function showSection(sectionId) {
+            hideAllSections();
+            const section = document.getElementById(sectionId);
+            if (section) section.style.display = 'block';
+            localStorage.setItem('activeSection', sectionId);
+
+            // Update active class on navigation links
+            const isDropdownSection = ['content-all', 'content-new', 'content-preowned'].includes(sectionId);
+            document.querySelectorAll('.navbar a').forEach(link => {
+                link.classList.remove('active');
+                if (isDropdownSection) {
+                    if (link.getAttribute('data-target') === 'content-home') {
+                        link.classList.add('active');
+                    }
+                } else {
+                    if (link.getAttribute('data-target') === sectionId) {
+                        link.classList.add('active');
+                    }
+                }
+            });
+
+            // Update the URL using the History API
+            const hash = `#${sectionId.replace('content-', '')}`; // Extract section name from ID
+            history.pushState(null, null, hash);
+
+            // Toggle navbar-b visibility
+            const navbarB = document.getElementById('navbar-b');
+            const header = document.querySelector('.header');
+            if (['content-repair', 'content-about', 'content-contact'].includes(sectionId)) {
+                navbarB.classList.add('hidden');
+                header.classList.add('shrink');
+            } else {
+                navbarB.classList.remove('hidden');
+                header.classList.remove('shrink');
+            }
+        }
+
+        // Function to handle dropdown selection
+        document.getElementById('dropdown').addEventListener('change', function() {
+            const value = this.value;
+            showSection(value === '1' ? 'content-all' : value === '2' ? 'content-new' : 'content-preowned');
+        });
+
+        // Function to handle navigation links
+        document.querySelectorAll('.navbar a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                showSection(this.getAttribute('data-target'));
+            });
+        });
+
+        // Function to handle initial page load and URL hash changes
+        function handleHashChange() {
+            const hash = window.location.hash.substring(1); // Remove the '#' from the hash
+            const sectionId = `content-${hash}`; // Convert hash to section ID
+            if (document.getElementById(sectionId)) {
+                showSection(sectionId);
+            } else {
+                showSection('content-home'); // Default to Home if no valid hash
+            }
+        }
+
+        // Listen for hash changes (e.g., when the user clicks the back button)
+        window.addEventListener('hashchange', handleHashChange);
+
+        // Initialize with the correct active section based on the URL hash
+        handleHashChange();
+    </script>
+</body>
+</html>
