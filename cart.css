@@ -14,15 +14,15 @@ body {
 
 .logo {
     border-radius: 5%;
-    width: 120px; /* Ensure the width and height are the same for a perfect circle */
+    width: 120px;
     height: 70px;
-    object-fit: cover; /* Ensures the image covers the area without distortion */
+    object-fit: cover;
 }
 
 .top-bar {
     width: 80%;
     height: 4rem;
-    background-color: #eee;
+    background-color: #d6d6d6;
     border-radius: 10px;
     margin-bottom: 20px;
     margin-top: 10px;
@@ -42,7 +42,6 @@ body {
     height: 190px;
     background-color: red;
     border-radius: 10px;
-    margin-bottom: 20px;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -54,23 +53,17 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; /* Allows wrapping for mobile */
+    flex-wrap: wrap;
 }
 
 .hidden {
     display: none;
 }
 
-.navbar p {
-    font-size: 30px;
-    font-weight: bold;
-    color: #fff;
-}
-
 .navbar ul {
     display: flex;
     list-style: none;
-    flex-wrap: wrap; /* Allows wrapping for mobile */
+    flex-wrap: wrap;
 }
 
 .navbar ul li a {
@@ -90,7 +83,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap; /* Allows wrapping for mobile */
+    flex-wrap: wrap;
 }
 
 .dropdown {
@@ -164,14 +157,9 @@ select:hover {
         text-align: center;
     }
 
-    .hidden {
-        display: none !important;
-    }
-
     .header.shrink {
-        height: 270px !important; /* Shrunk size */
+        height: 270px !important;
     }
-    
 
     .top-bar p {
         margin: 5px 0;
@@ -179,7 +167,7 @@ select:hover {
 
     .header {
         transition: all 0.3s ease-in-out;
-        height: 440px !important; /* Keep it consistent */
+        height: 440px !important;
         width: 90%;
     }
 
@@ -192,13 +180,12 @@ select:hover {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 20px; /* Adds space between items */
+        gap: 20px;
         margin-top: 20px;
         margin-bottom: 10px;
-        list-style: none; /* Removes default bullet points */
-        padding: 0; /* Removes default padding */
+        list-style: none;
+        padding: 0;
     }
-
 
     .navbar-b {
         flex-direction: column;
@@ -216,87 +203,4 @@ select:hover {
     .search input {
         width: 80%;
     }
-
-    .card-container {
-        flex-direction: column; /* Stack cards vertically on mobile */
-    }
-
-    .card {
-        width: 100%; /* Full width on mobile */
-        max-width: none; /* Remove max-width restriction */
-        margin-bottom: 20px; /* Space between stacked cards */
-    }
-}
-
-
-
-.home-widget {
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.home-widget h3 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    color: #333;
-    text-align: center;
-}
-
-/* Card Container */
-.card-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px; /* Space between cards */
-    justify-content: center; /* Center cards in the container */
-}
-
-/* Individual Card */
-.card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%; /* Full width on mobile */
-    max-width: 300px; /* Max width for desktop */
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-/* Card Content */
-.card-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Item Title */
-.card-content h4 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-/* Tag */
-.tag {
-    background-color: red;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 12px;
-    font-size: 0.9rem;
-}
-
-.card-container {
-    justify-content: flex-start; /* Align cards to the start on desktop */
-}
-
-.card {
-    width: calc(33.333% - 20px); /* Three cards per row with gap */
 }

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .container {
+      max-width: 1150px;
+      padding: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.6rem;
+      color: #3b3636;
+    }
+
+    .grid {
+      display: flex; /* Use flexbox for desktop */
+      flex-wrap: wrap; /* Allow wrapping if screen is too small */
+      gap: 20px;
+      justify-content: center; /* Align items to the start */
+    }
+
+    .product-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      width: calc(25% - 20px); /* 4 items per row on desktop (adjust as needed) */
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-image-container {
+      width: 100%;
+      height: 200px; /* Fixed height for the image container */
+      overflow: hidden;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensures the image covers the container */
+    }
+
+    .product-info {
+      padding: 15px;
+      text-align: center;
+      flex-grow: 1; /* Ensures the info section takes up remaining space */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .product-name {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: #222;
+    }
+
+    .product-price {
+      font-size: 1.1rem;
+      color: #e67e22;
+      margin-bottom: 15px;
+    }
+
+    .add-to-cart {
+      background-color: #363636;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .add-to-cart:hover {
+      background-color: #ff0000;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 items per row on mobile */
+      }
+
+      .product-card {
+        width: 100%; /* Full width for mobile */
+      }
+
+      h1 {
+        font-size: 1.2rem;
+      }
+
+      .product-name {
+        font-size: 1rem;
+      }
+
+      .product-price {
+        font-size: 0.9rem;
+      }
+
+      .add-to-cart {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Top Selling Products (TSP)</h1>
+    <div class="grid">
+      <!-- Product 1 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="https://firebasestorage.googleapis.com/v0/b/student-portal-a2284.appspot.com/o/LibraryUploads%2FGrade%2012%2FMathematics%2F1741169613182_thumb.jpg?alt=media&token=179f116d-6bc7-4cc0-9e4a-200fa8c374cf" alt="Product 1" class="product-image" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Product 1</div>
+          <div class="product-price">$19.99</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+      <!-- Product 2 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="https://firebasestorage.googleapis.com/v0/b/student-portal-a2284.appspot.com/o/LibraryUploads%2FGrade%2012%2FMathematics%2F1741168156447_thumb.jpg?alt=media&token=cd60e66e-7252-4356-a3c9-a848c2983636" alt="Product 2" class="product-image" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Product 2</div>
+          <div class="product-price">$29.99</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+      <!-- Product 3 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="https://firebasestorage.googleapis.com/v0/b/student-portal-a2284.appspot.com/o/LibraryUploads%2FGrade%2012%2FMathematics%2F1741164314442_thumb.jpg?alt=media&token=a5d8ee25-709c-4c77-a123-84efa2de3ece" alt="Product 3" class="product-image" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Product 3</div>
+          <div class="product-price">$39.99</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+      <!-- Product 4 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="https://firebasestorage.googleapis.com/v0/b/student-portal-a2284.appspot.com/o/LibraryUploads%2FGrade%2012%2FMathematics%2F1741167295699_thumb.jpg?alt=media&token=bcd647e2-014a-447c-b277-711b96cd7cd5" alt="Product 4" class="product-image" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Product 4</div>
+          <div class="product-price">$49.99</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+      <!-- Product 5 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="https://firebasestorage.googleapis.com/v0/b/student-portal-a2284.appspot.com/o/LibraryUploads%2FGrade%2012%2FMathematics%2F1741169235323_thumb.jpg?alt=media&token=2a12d18f-006f-4ff9-9bf8-15e02e4fad86" alt="Product 5" class="product-image" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Product 5</div>
+          <div class="product-price">$49.99</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+      <!-- Product 6 -->
+      <div class="product-card">
+        <div class="product-image-container">
+          <img src="https://firebasestorage.googleapis.com/v0/b/student-portal-a2284.appspot.com/o/LibraryUploads%2FGrade%2012%2FMathematics%2F1741165539467_thumb.jpg?alt=media&token=40d39b22-f9c0-45b7-b008-568b7999bbe1" alt="Product 6" class="product-image" loading="lazy">
+        </div>
+        <div class="product-info">
+          <div class="product-name">Product 6</div>
+          <div class="product-price">$49.99</div>
+          <button class="add-to-cart">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
