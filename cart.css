@@ -111,7 +111,7 @@ select:hover {
     width: 500px;
     background-color: white;
     height: 45px;
-    border-radius: 45px;
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -167,7 +167,7 @@ select:hover {
 
     .header {
         transition: all 0.3s ease-in-out;
-        height: 450px !important;
+        height: 400px !important;
         width: 90%;
     }
 

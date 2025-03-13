@@ -267,18 +267,12 @@
                 <li><a href="#about" data-target="content-about">About</a></li>
                 <li><a href="#contact" data-target="content-contact">Contact</a></li>
             </ul>
+            
         </div>
 
         <div class="navbar-b" id="navbar-b">
-            <div class="dropdown">
-                <select id="dropdown">
-                    <option value="1">All</option>
-                    <option value="2">New</option>
-                    <option value="3">Preowned</option>
-                </select>
-            </div>
             <div class="search">
-                <input type="search" placeholder="Search...">
+                <input type="search" placeholder="Company Location...">
                 <i class="fa-solid fa-magnifying-glass"></i>
             </div>
             <div class="cart">
@@ -315,7 +309,6 @@
         document.addEventListener('DOMContentLoaded', function() {
             const sections = document.querySelectorAll('.content-section');
             const navbarLinks = document.querySelectorAll('.navbar a');
-            const dropdown = document.getElementById('dropdown');
             const navbarB = document.getElementById('navbar-b');
             const header = document.querySelector('.header');
 
@@ -342,23 +335,18 @@
                 }
                 localStorage.setItem('activeSection', sectionId);
 
-                const isDropdownSection = ['content-all', 'content-new', 'content-preowned'].includes(sectionId);
+                // Update active class for navigation links
                 navbarLinks.forEach(link => {
                     link.classList.remove('active');
-                    if (isDropdownSection) {
-                        if (link.getAttribute('data-target') === 'content-home') {
-                            link.classList.add('active');
-                        }
-                    } else {
-                        if (link.getAttribute('data-target') === sectionId) {
-                            link.classList.add('active');
-                        }
+                    if (link.getAttribute('data-target') === sectionId) {
+                        link.classList.add('active');
                     }
                 });
 
                 const hash = `#${sectionId.replace('content-', '')}`;
                 history.pushState(null, null, hash);
 
+                // Header shrink logic
                 if (['content-repair', 'content-about', 'content-contact'].includes(sectionId)) {
                     navbarB.classList.add('hidden');
                     header.classList.add('shrink');
@@ -367,11 +355,6 @@
                     header.classList.remove('shrink');
                 }
             }
-
-            dropdown.addEventListener('change', function() {
-                const value = this.value;
-                showSection(value === '1' ? 'content-all' : value === '2' ? 'content-new' : 'content-preowned');
-            });
 
             navbarLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
