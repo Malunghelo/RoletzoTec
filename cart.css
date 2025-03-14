@@ -183,7 +183,7 @@ select:hover {
 
     .header {
         transition: all 0.3s ease-in-out;
-        height: 400px !important;
+        height: 350px !important;
         width: 90%;
     }
 
@@ -268,8 +268,8 @@ select:hover {
 .cart-drawer {
     position: fixed;
     top: 0;
-    right: -400px;
-    width: 400px;
+    right: -350px;
+    width: 300px;
     height: 100%;
     background: #fff;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
