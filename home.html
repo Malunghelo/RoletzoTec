@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     .container {
-      max-width: 90%;
-      padding: 10px;
+      width: 90%; /* Ensure the container is exactly 90% of the screen width */
       margin: 0 auto; /* Center the container */
+      padding: 10px;
     }
 
     h1 {
@@ -21,7 +21,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
-      justify-content: center; /* Center items */
+      width: 100%; /* Ensure the grid takes up 100% of the container's width */
     }
 
     .product-card {
@@ -30,7 +30,7 @@
       border-radius: 8px;
       overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      width: calc(25% - 20px); /* 4 items per row on desktop */
+      width: calc(25% - 15px); /* 4 items per row on desktop (account for gap) */
       display: flex;
       flex-direction: column;
       min-height: 350px; /* Ensure consistent height */
@@ -93,41 +93,16 @@
       background-color: #ff0000;
     }
 
-    /* Mobile Responsive */
+    /* Responsive Adjustments */
     @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 items per row on mobile */
-      }
-
       .product-card {
-        width: calc(50% - 10px); /* Adjust width for mobile */
-      }
-
-      h1 {
-        font-size: 1.2rem;
-      }
-
-      .product-name {
-        font-size: 1rem;
-      }
-
-      .product-price {
-        font-size: 0.9rem;
-      }
-
-      .add-to-cart {
-        padding: 8px 16px;
-        font-size: 0.9rem;
+        width: calc(50% - 10px); /* 2 items per row on tablets */
       }
     }
 
     @media (max-width: 480px) {
-      .grid {
-        grid-template-columns: 1fr; /* 1 item per row on very small screens */
-      }
-
       .product-card {
-        width: 100%; /* Full width for very small screens */
+        width: calc(50% - 10px); /* 2 items per row on mobile */
       }
     }
   </style>
