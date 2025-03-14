@@ -174,7 +174,7 @@ select:hover {
     }
 
     .header.shrink {
-        height: 270px !important;
+        height: 230px !important;
     }
 
     .top-bar p {
@@ -183,7 +183,7 @@ select:hover {
 
     .header {
         transition: all 0.3s ease-in-out;
-        height: 350px !important;
+        height: 340px !important;
         width: 90%;
     }
 
