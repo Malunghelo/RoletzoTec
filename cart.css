@@ -20,7 +20,7 @@ body {
 }
 
 .top-bar {
-    width: 90%;
+    width: 95%;
     height: 4rem;
     background-color: #d6d6d6;
     border-radius: 10px;
@@ -38,7 +38,7 @@ body {
 }
 
 .header {
-    width: 90%;
+    width: 95%;
     height: 190px;
     background-color: red;
     border-radius: 10px;
@@ -165,7 +165,7 @@ select:hover {
 /* Mobile Styles */
 @media (max-width: 768px) {
     .top-bar {
-        width: 90%;
+        width: 95%;
         flex-direction: column;
         height: auto;
         padding: 10px;
@@ -183,7 +183,7 @@ select:hover {
     .header {
         transition: all 0.3s ease-in-out;
         height: 340px !important;
-        width: 90%;
+        width: 95%;
     }
 
     .navbar {
