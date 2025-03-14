@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Submission Form</title>
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #FFFFFF;
+      color: #000000;
+    }
+
+    /* Header */
+    header {
+      background-color: #000000;
+      color: #FFFFFF;
+      padding: 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    /* Main Content */
+    main {
+      display: flex;
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      gap: 20px;
+    }
+
+    /* Left Section (Steps) */
+    .steps {
+      flex: 1;
+      background-color: #F5F5F5;
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    .steps h2 {
+      color: #CC0000;
+      margin-bottom: 20px;
+    }
+
+    .steps ol {
+      padding-left: 20px;
+    }
+
+    .steps li {
+      margin-bottom: 10px;
+    }
+
+    /* Right Section (Form) */
+    .form-section {
+      flex: 2;
+      background-color: #FFFFFF;
+      padding: 20px;
+      border: 1px solid #CC0000;
+      border-radius: 10px;
+    }
+
+    .form-section h2 {
+      color: #000000;
+      margin-bottom: 20px;
+    }
+
+    input, textarea, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #000000;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: 2px solid #CC0000;
+    }
+
+    button {
+      background-color: #CC0000;
+      color: #FFFFFF;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #990000;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #000000;
+      color: #FFFFFF;
+      text-align: center;
+      padding: 10px;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      main {
+        flex-direction: column;
+      }
+
+      .steps, .form-section {
+        flex: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Main Content -->
+  <main>
+    <!-- Left Section (Steps) -->
+    <div class="steps">
+      <h2>Steps to Submit</h2>
+      <ol>
+        <li>Enter your product details.</li>
+        <li>Provide your contact information.</li>
+        <li>Upload an image of your product.</li>
+        <li>Click "Submit to Admin".</li>
+      </ol>
+    </div>
+
+    <!-- Right Section (Form) -->
+    <div class="form-section">
+      <h2>What are you selling?</h2>
+      <form id="productForm">
+        <!-- Product Name -->
+        <input type="text" id="productName" name="productName" placeholder="Product Name" required>
+
+        <!-- Product Description -->
+        <textarea id="productDescription" name="productDescription" placeholder="Product Description" rows="4" required></textarea>
+
+        <!-- Price -->
+        <input type="number" id="price" name="price" placeholder="Price" required>
+
+        <!-- Upload Image -->
+        <input type="file" id="productImage" name="productImage" accept="image/*" required>
+
+        <!-- Contact Information -->
+        <input type="email" id="contactEmail" name="contactEmail" placeholder="Your Email" required>
+
+        <!-- Submit Button -->
+        <button type="submit">Submit to Admin</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <!-- <footer>
+    <p>© 2023 Your Company</p>
+  </footer> -->
+
+  <!-- JavaScript for Form Submission -->
+  <script>
+    document.getElementById('productForm').addEventListener('submit', function (event) {
+      event.preventDefault(); // Prevent form from submitting the traditional way
+
+      // Gather form data
+      const productName = document.getElementById('productName').value;
+      const productDescription = document.getElementById('productDescription').value;
+      const price = document.getElementById('price').value;
+      const category = document.getElementById('category').value;
+      const contactEmail = document.getElementById('contactEmail').value;
+
+      // Create WhatsApp message
+      const message = `Product Name: ${productName}%0A` +
+                      `Description: ${productDescription}%0A` +
+                      `Price: ${price}%0A` +
+                      `Contact Email: ${contactEmail}`;
+
+      // Generate WhatsApp link
+      const whatsappLink = `https://wa.me/?text=${message}`;
+
+      // Open WhatsApp in a new tab
+      window.open(whatsappLink, '_blank');
+    });
+  </script>
+</body>
+</html>

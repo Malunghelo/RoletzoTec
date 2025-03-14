@@ -220,4 +220,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Initial load of home.html
     loadHomeContent();
+    
 });
