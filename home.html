@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     .product-container {
-      width: 95%; /* Ensure the container is exactly 90% of the screen width */
-      margin: 0 auto; /* Center the container */
+      width: 95%;
+      margin: 0 auto;
       margin-top: 10px;
     }
 
@@ -20,8 +20,8 @@
     .product-grid {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px; /* Reduced gap for better fit on mobile */
-      width: 100%; /* Ensure the grid takes up 100% of the container's width */
+      gap: 10px;
+      width: 100%;
     }
 
     .product-card {
@@ -30,10 +30,10 @@
       border-radius: 8px;
       overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      width: calc(25% - 10px); /* 4 items per row on desktop (account for gap) */
+      width: calc(25% - 10px);
       display: flex;
       flex-direction: column;
-      min-height: 350px; /* Ensure consistent height */
+      min-height: 350px;
     }
 
     .product-card:hover {
@@ -43,24 +43,24 @@
 
     .product-image-container {
       width: 100%;
-      height: 200px; /* Fixed height for the image container */
+      height: 200px;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      background-color: #f9f9f9; /* Background color for empty space */
+      background-color: #f9f9f9;
     }
 
     .product-image {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* Ensures the entire image is visible */
+      object-fit: contain;
     }
 
     .product-info {
       padding: 15px;
       text-align: center;
-      flex-grow: 1; /* Ensures the info section takes up remaining space */
+      flex-grow: 1;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -82,11 +82,12 @@
       background-color: #363636;
       color: #fff;
       border: none;
-      padding: 10px 20px;
+      padding: 12px 20px; /* Slightly larger padding for better touch */
       border-radius: 5px;
       cursor: pointer;
       font-size: 1rem;
       transition: background-color 0.3s ease;
+      width: 100%; /* Full-width button for easier tapping */
     }
 
     .add-to-cart:hover {
@@ -96,19 +97,36 @@
     /* Responsive Adjustments */
     @media (max-width: 768px) {
       .product-card {
-        width: calc(33.33% - 10px); /* 3 items per row on tablets */
+        width: calc(50% - 5px); /* 2 items per row on tablets */
+      }
+
+      .add-to-cart {
+        padding: 15px 20px; /* Larger padding for tablets */
       }
     }
 
     @media (max-width: 480px) {
       .product-card {
-        width: calc(50% - 5px); /* 2 items per row on mobile */
+        width: 100%; /* 1 item per row on mobile */
+      }
+
+      .add-to-cart {
+        padding: 15px 20px; /* Larger padding for mobile */
+      }
+
+      .product-name {
+        font-size: 1.4rem; /* Larger font size for better readability */
+      }
+
+      .product-price {
+        font-size: 1.3rem; /* Larger font size for better readability */
       }
     }
   </style>
 </head>
 <body>
   <div class="product-container">
+    <h1></h1>
     <div class="product-grid">
       <!-- Product 1 -->
       <div class="product-card">
@@ -178,11 +196,13 @@
       </div>
     </div>
   </div>
-  
+
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const addToCartButtons = document.querySelectorAll('.add-to-cart');
+      const productImages = document.querySelectorAll('.product-image');
 
+      // Add to cart functionality
       addToCartButtons.forEach(button => {
         button.addEventListener('click', function () {
           const productId = this.getAttribute('data-id');
@@ -196,13 +216,36 @@
         cart.push(product);
         localStorage.setItem('cart', JSON.stringify(cart));
 
-        console.log(`Product ${productId} added to cart. Cart length: ${cart.length}`); // Debug log
+        console.log(`Product ${productId} added to cart. Cart length: ${cart.length}`);
 
         // Dispatch the cartUpdated event to parent (index.html)
         const event = new CustomEvent('cartUpdated', { detail: cart.length });
-        console.log('Dispatching cartUpdated event with detail:', cart.length); // Debug log
         window.parent.document.dispatchEvent(event);
       }
+
+      // Lazy load images using Intersection Observer
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            observer.unobserve(img);
+          }
+        });
+      }, observerOptions);
+
+      productImages.forEach(img => {
+        if (img.dataset.src) {
+          observer.observe(img);
+        }
+      });
     });
   </script>
 </body>
