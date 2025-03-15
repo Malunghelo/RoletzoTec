@@ -31,10 +31,11 @@
       border-radius: 8px;
       overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
-      width: calc(25% - 10px);
+      width: calc(25% - 10px); /* 4 items per row on desktop */
       display: flex;
       flex-direction: column;
-      min-height: 350px;
+      min-height: 350px; /* Default height for desktop */
+      cursor: pointer; /* Add pointer cursor */
     }
 
     .product-card:hover {
@@ -44,18 +45,43 @@
 
     .product-image-container {
       width: 100%;
-      height: 200px;
+      height: 200px; /* Fixed height for the image container */
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
       background-color: #f9f9f9;
+      position: relative; /* For loading spinner */
     }
 
     .product-image {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: contain; /* Ensure images fit within the container */
+      opacity: 0; /* Hide image until it's loaded */
+      transition: opacity 0.3s ease;
+    }
+
+    .product-image.loaded {
+      opacity: 1; /* Show image when it's loaded */
+    }
+
+    .loading-spinner {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
     .product-info {
@@ -95,40 +121,51 @@
       background-color: #ff0000;
     }
 
+    /* Responsive Adjustments */
     @media (max-width: 768px) {
       .product-card {
-        width: calc(50% - 5px);
+        width: calc(50% - 5px); /* 2 items per row on tablets */
+        min-height: 300px; /* Reduce height for tablets */
+      }
+
+      .product-image-container {
+        height: 150px; /* Reduce image container height for tablets */
       }
 
       .add-to-cart {
-        padding: 15px 20px;
+        padding: 10px 15px; /* Smaller padding for tablets */
       }
     }
 
     @media (max-width: 480px) {
       .product-card {
-        width: 25% - 5px;
+        width: calc(50% - 5px); /* 2 items per row on mobile */
+        min-height: 250px; /* Further reduce height for mobile */
       }
 
-      .add-to-cart {
-        padding: 15px 20px;
+      .product-image-container {
+        height: 120px; /* Reduce image container height for mobile */
       }
 
       .product-name {
-        font-size: 1.4rem;
+        font-size: 1rem; /* Smaller font size for mobile */
       }
 
       .product-price {
-        font-size: 1.3rem;
+        font-size: 0.9rem; /* Smaller font size for mobile */
+      }
+
+      .add-to-cart {
+        padding: 8px 12px; /* Smaller padding for mobile */
+        font-size: 0.9rem; /* Smaller font size for mobile */
       }
     }
   </style>
 </head>
 <body>
   <div class="product-container">
-    <h1></h1>
     <div class="product-grid">
-      <!-- Product 1 -->
+      <!-- Product Cards -->
       <div class="product-card">
         <div class="product-image-container">
           <img src="https://firebasestorage.googleapis.com/v0/b/student-portal-a2284.appspot.com/o/RTC%20images%2Fdownload%20(1).jpeg?alt=media&token=3226891f-db03-4ae5-9f81-9feaf7d24627" alt="Product 1" class="product-image" loading="lazy">
@@ -199,12 +236,21 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const addToCartButtons = document.querySelectorAll('.add-to-cart');
-      const productImages = document.querySelectorAll('.product-image');
+      const productCards = document.querySelectorAll('.product-card');
+
+      // Redirect to product-details.html on product card click
+      productCards.forEach(card => {
+        card.addEventListener('click', function () {
+          const productId = this.getAttribute('data-id');
+          window.location.href = `product-details.html?id=${productId}`;
+        });
+      });
 
       // Add to cart functionality
+      const addToCartButtons = document.querySelectorAll('.add-to-cart');
       addToCartButtons.forEach(button => {
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function (e) {
+          e.stopPropagation(); // Prevent card click event
           const productId = this.getAttribute('data-id');
           addToCart(productId);
         });
@@ -215,44 +261,8 @@
         const product = { id: productId, name: `Product ${productId}`, price: 19.99 }; // Adjust as needed
         cart.push(product);
         localStorage.setItem('cart', JSON.stringify(cart));
-
         console.log(`Product ${productId} added to cart. Cart length: ${cart.length}`);
-
-        // Dispatch the cartUpdated event to parent (index.html)
-        const event = new CustomEvent('cartUpdated', { detail: cart.length });
-        window.parent.document.dispatchEvent(event);
       }
-
-      // Lazy load images using Intersection Observer
-      const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src;
-            img.removeAttribute('data-src');
-            observer.unobserve(img);
-          }
-        });
-      }, observerOptions);
-
-      productImages.forEach(img => {
-        if (img.dataset.src) {
-          observer.observe(img);
-        }
-      });
-
-      // Refresh the page when the user comes back to it
-      document.addEventListener('visibilitychange', function () {
-        if (document.visibilityState === 'visible') {
-          location.reload(); // Reload the page
-        }
-      });
     });
   </script>
 </body>
