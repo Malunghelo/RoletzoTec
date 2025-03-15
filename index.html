@@ -63,7 +63,12 @@
 
     <div class="container">
         <div id="root"></div>
-        <div id="content-placeholder"></div>
+        <div id="content-placeholder">
+            <!-- Sections are always present in the DOM -->
+            <div id="content-home" class="content-section"></div>
+            <div id="content-sell" class="content-section" style="display: none;"></div>
+            <div id="content-contact" class="content-section" style="display: none;"></div>
+        </div>
     </div>
     
     <!-- Link to the external JavaScript file -->

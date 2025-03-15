@@ -3,190 +3,127 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Submission Form</title>
   <style>
-    /* General Styles */
-    body {
-      font-family: 'Roboto', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #FFFFFF;
-      color: #000000;
-    }
+   /* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  color: #333;
+}
 
-    /* Header */
-    header {
-      background-color: #000000;
-      color: #FFFFFF;
-      padding: 20px;
-      text-align: center;
-    }
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
 
-    header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
+.image-section {
+  width: 100%;
+  text-align: center;
+}
 
-    /* Main Content */
-    main {
-      display: flex;
-      max-width: 1200px;
-      margin: 20px auto;
-      padding: 20px;
-      gap: 20px;
-    }
+.instruction-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-    /* Left Section (Steps) */
-    .steps {
-      flex: 1;
-      background-color: #F5F5F5;
-      padding: 20px;
-      border-radius: 10px;
-    }
+.instructions-section {
+  width: 100%;
+  margin-top: 20px;
+}
 
-    .steps h2 {
-      color: #CC0000;
-      margin-bottom: 20px;
-    }
+.instruction-title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
 
-    .steps ol {
-      padding-left: 20px;
-    }
+.instruction-steps {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
 
-    .steps li {
-      margin-bottom: 10px;
-    }
+.instruction-steps li {
+  margin-bottom: 10px;
+}
 
-    /* Right Section (Form) */
-    .form-section {
-      flex: 2;
-      background-color: #FFFFFF;
-      padding: 20px;
-      border: 1px solid #CC0000;
-      border-radius: 10px;
-    }
+.continue-button {
+  background-color: #d44545;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 
-    .form-section h2 {
-      color: #000000;
-      margin-bottom: 20px;
-    }
+.continue-button:hover {
+  background-color: #ff0000;
+}
 
-    input, textarea, select, button {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #000000;
-      border-radius: 5px;
-      font-size: 16px;
-    }
+/* Responsive Styles */
+@media (min-width: 600px) {
+  .container {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+  }
 
-    input:focus, textarea:focus, select:focus {
-      outline: 2px solid #CC0000;
-    }
+  .image-section {
+    width: 50%;
+    margin-right: 20px;
+  }
 
-    button {
-      background-color: #CC0000;
-      color: #FFFFFF;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
+  .instructions-section {
+    width: 50%;
+    margin-top: 0;
+  }
+}
 
-    button:hover {
-      background-color: #990000;
-    }
+@media (min-width: 900px) {
+  .instruction-title {
+    font-size: 2.5rem;
+  }
 
-    /* Footer */
-    footer {
-      background-color: #000000;
-      color: #FFFFFF;
-      text-align: center;
-      padding: 10px;
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-    }
+  .instruction-steps {
+    font-size: 1.1rem;
+  }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      main {
-        flex-direction: column;
-      }
-
-      .steps, .form-section {
-        flex: 1;
-      }
-    }
+  .continue-button {
+    font-size: 1.1rem;
+    padding: 15px 30px;
+  }
+}
   </style>
 </head>
 <body>
-  <!-- Main Content -->
-  <main>
-    <!-- Left Section (Steps) -->
-    <div class="steps">
-      <h2>Steps to Submit</h2>
-      <ol>
-        <li>Enter your product details.</li>
-        <li>Provide your contact information.</li>
-        <li>Upload an image of your product.</li>
-        <li>Click "Submit to Admin".</li>
+  <div class="container">
+    <div class="image-section">
+      <img src="assets/icons/tradein.png" alt="Instruction Image" class="instruction-image"
+      width="200" height="200">
+    </div>
+    <div class="instructions-section">
+      <h1 class="instruction-title">Trade In For Cash</h1>
+      <ol class="instruction-steps">
+        <li>Step 1: Contact Number</li>
+        <li>Step 2: Product Name</li>
+        <li>Step 3: Product Description</li>
+        <li>Step 4: Is your product New or Pre-owned</li>
+        <li>Step 5: Location of your Product</li>
+        <li>Step 6: Images of your Product</li>
       </ol>
+      <button class="continue-button" onclick="window.location.href='sell-details.html'">Continue</button>
     </div>
-
-    <!-- Right Section (Form) -->
-    <div class="form-section">
-      <h2>What are you selling?</h2>
-      <form id="productForm">
-        <!-- Product Name -->
-        <input type="text" id="productName" name="productName" placeholder="Product Name" required>
-
-        <!-- Product Description -->
-        <textarea id="productDescription" name="productDescription" placeholder="Product Description" rows="4" required></textarea>
-
-        <!-- Price -->
-        <input type="number" id="price" name="price" placeholder="Price" required>
-
-        <!-- Upload Image -->
-        <input type="file" id="productImage" name="productImage" accept="image/*" required>
-
-        <!-- Contact Information -->
-        <input type="email" id="contactEmail" name="contactEmail" placeholder="Your Email" required>
-
-        <!-- Submit Button -->
-        <button type="submit">Submit to Admin</button>
-      </form>
-    </div>
-  </main>
-
-  <!-- Footer -->
-  <!-- <footer>
-    <p>© 2023 Your Company</p>
-  </footer> -->
-
-  <!-- JavaScript for Form Submission -->
-  <script>
-    document.getElementById('productForm').addEventListener('submit', function (event) {
-      event.preventDefault(); // Prevent form from submitting the traditional way
-
-      // Gather form data
-      const productName = document.getElementById('productName').value;
-      const productDescription = document.getElementById('productDescription').value;
-      const price = document.getElementById('price').value;
-      const category = document.getElementById('category').value;
-      const contactEmail = document.getElementById('contactEmail').value;
-
-      // Create WhatsApp message
-      const message = `Product Name: ${productName}%0A` +
-                      `Description: ${productDescription}%0A` +
-                      `Price: ${price}%0A` +
-                      `Contact Email: ${contactEmail}`;
-
-      // Generate WhatsApp link
-      const whatsappLink = `https://wa.me/?text=${message}`;
-
-      // Open WhatsApp in a new tab
-      window.open(whatsappLink, '_blank');
-    });
-  </script>
+  </div>
 </body>
 </html>

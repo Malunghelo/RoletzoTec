@@ -1,90 +1,8 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const sections = document.querySelectorAll('.content-section');
     const navbarLinks = document.querySelectorAll('.navbar a');
     const navbarB = document.getElementById('navbar-b');
     const header = document.querySelector('.header');
-
-    function hideAllSections() {
-        sections.forEach(section => {
-            console.log(`Hiding section: ${section.id}`);
-            section.style.display = 'none';
-        });
-    }
-
-    function loadContent(url, sectionId) {
-        fetch(url)
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('content-placeholder').innerHTML = data;
-                console.log(`Loaded content for: ${sectionId}`);
-            })
-            .catch(error => console.error(`Error loading ${url}:`, error));
-    }
-
-    function showSection(sectionId) {
-        hideAllSections();
-        if (sectionId === 'content-home') {
-            loadContent('home.html', sectionId);
-        } else if (sectionId === 'content-sell') {
-            loadContent('sell.html', sectionId);
-        } else if (sectionId === 'content-about') {
-            loadContent('about.html', sectionId);
-        } else if (sectionId === 'content-contact') {
-            loadContent('contact.html', sectionId);
-        } else {
-            const section = document.getElementById(sectionId);
-            if (section) {
-                console.log(`Showing section: ${sectionId}`);
-                section.style.display = 'block';
-            }
-        }
-        localStorage.setItem('activeSection', sectionId);
-
-        // Update active class for navigation links
-        navbarLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('data-target') === sectionId) {
-                link.classList.add('active');
-            }
-        });
-
-        const hash = `#${sectionId.replace('content-', '')}`;
-        history.pushState(null, null, hash);
-
-        // Header shrink logic
-        if (['content-sell', 'content-about', 'content-contact'].includes(sectionId)) {
-            navbarB.classList.add('hidden');
-            header.classList.add('shrink');
-        } else {
-            navbarB.classList.remove('hidden');
-            header.classList.remove('shrink');
-        }
-    }
-
-    navbarLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetSection = this.getAttribute('data-target');
-            console.log(`Link clicked: ${targetSection}`);
-            showSection(targetSection);
-        });
-    });
-
-    function handleHashChange() {
-        const hash = window.location.hash.substring(1);
-        const sectionId = `content-${hash}`;
-        if (document.getElementById(sectionId)) {
-            showSection(sectionId);
-        } else {
-            showSection('content-home');
-        }
-    }
-
-    window.addEventListener('hashchange', handleHashChange);
-    handleHashChange();
-});
-
-document.addEventListener('DOMContentLoaded', function () {
     const cartElement = document.querySelector('.cart p');
     const cartDrawer = document.querySelector('.cart-drawer');
     const cartItemsContainer = document.querySelector('.cart-items');
@@ -95,6 +13,129 @@ document.addEventListener('DOMContentLoaded', function () {
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
     updateCartCount();
 
+    // Function to hide all sections
+    function hideAllSections() {
+        sections.forEach(section => {
+            section.style.display = 'none';
+        });
+    }
+
+    // Function to load content dynamically
+    function loadContent(url, sectionId) {
+        fetch(url)
+            .then(response => response.text())
+            .then(data => {
+                // Insert the loaded content into the section
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.innerHTML = data;
+                    section.style.display = 'block'; // Show the section
+                }
+
+                // Execute scripts after the content is loaded
+                if (sectionId === 'content-sell') {
+                    // Load and execute the sell-form.js logic
+                    const script = document.createElement('script');
+                    script.src = 'sell-form.js';
+                    script.onload = () => {
+                        // Initialize sell-specific logic here
+                        initializeSellSection();
+                    };
+                    document.body.appendChild(script);
+                } else if (sectionId === 'content-home') {
+                    // Attach event listeners to "Add to Cart" buttons in home.html
+                    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+                    addToCartButtons.forEach(button => {
+                        button.addEventListener('click', function () {
+                            const productId = this.getAttribute('data-id');
+                            addToCart(productId);
+                        });
+                    });
+                }
+            })
+            .catch(error => console.error(`Error loading ${url}:`, error));
+    }
+
+    // Function to initialize sell section
+    function initializeSellSection() {
+        // Add sell-specific logic here
+        const sellForm = document.getElementById('sell-form');
+        if (sellForm) {
+            sellForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                // Handle form submission
+                alert('Sell form submitted');
+            });
+        }
+    }
+
+    // Function to show a specific section
+    function showSection(sectionId) {
+        hideAllSections();
+
+        // Load content dynamically based on the sectionId
+        if (sectionId === 'content-home') {
+            loadContent('home.html', sectionId);
+        } else if (sectionId === 'content-sell') {
+            loadContent('sell.html', sectionId);
+        } else if (sectionId === 'content-contact') {
+            loadContent('contact.html', sectionId);
+        } else {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.style.display = 'block';
+            }
+        }
+
+        // Update active class for navigation links
+        navbarLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-target') === sectionId) {
+                link.classList.add('active');
+            }
+        });
+
+        // Update the URL hash
+        const hash = `#${sectionId.replace('content-', '')}`;
+        history.pushState(null, null, hash);
+
+        // Header shrink logic
+        if (['content-sell', 'content-contact'].includes(sectionId)) {
+            navbarB.classList.add('hidden');
+            header.classList.add('shrink');
+        } else {
+            navbarB.classList.remove('hidden');
+            header.classList.remove('shrink');
+        }
+    }
+
+    // Add click event listeners to navigation links
+    navbarLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetSection = this.getAttribute('data-target');
+            showSection(targetSection);
+        });
+    });
+
+    // Handle hash change (e.g., when the user navigates back/forward)
+    function handleHashChange() {
+        const hash = window.location.hash.substring(1);
+        const sectionId = `content-${hash}`;
+        if (document.getElementById(sectionId)) {
+            showSection(sectionId);
+        } else {
+            showSection('content-home'); // Default to home if the section doesn't exist
+        }
+    }
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+
+    // Initial load based on the current hash
+    handleHashChange();
+
+    // Cart functionality
     // Open/close cart drawer
     document.querySelector('.cart').addEventListener('click', function () {
         cartDrawer.classList.toggle('open');
@@ -198,27 +239,4 @@ document.addEventListener('DOMContentLoaded', function () {
         alert('Proceeding to checkout...');
         // Add your checkout logic here
     });
-
-    // Load home.html and attach event listeners
-    function loadHomeContent() {
-        fetch('home.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('content-placeholder').innerHTML = data;
-
-                // Attach event listeners to "Add to Cart" buttons
-                const addToCartButtons = document.querySelectorAll('.add-to-cart');
-                addToCartButtons.forEach(button => {
-                    button.addEventListener('click', function () {
-                        const productId = this.getAttribute('data-id');
-                        addToCart(productId);
-                    });
-                });
-            })
-            .catch(error => console.error('Error loading home.html:', error));
-    }
-
-    // Initial load of home.html
-    loadHomeContent();
-    
 });
