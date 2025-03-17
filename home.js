@@ -1,4 +1,31 @@
 document.addEventListener('DOMContentLoaded', function () {
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyDikaZOvMYWWqjju_Izzlt_w-s7vsaW3Ag",
+        authDomain: "rgt-technical-support.firebaseapp.com",
+        projectId: "rgt-technical-support",
+        storageBucket: "rgt-technical-support.appspot.com",
+        messagingSenderId: "717513573179",
+        appId: "1:717513573179:web:2522958965e5166585ed1e",
+        measurementId: "G-0RCYY15LHD"
+    };
+
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+
+    // Firebase auth state observer
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            console.log("User is logged in:", user.email);
+        } else {
+            console.log("User is logged out");
+            window.location.href = 'login-register.html';
+        }
+    });
+
+    // DOM Elements
     const sections = document.querySelectorAll('.content-section');
     const navbarLinks = document.querySelectorAll('.navbar a');
     const navbarB = document.getElementById('navbar-b');
@@ -25,25 +52,19 @@ document.addEventListener('DOMContentLoaded', function () {
         fetch(url)
             .then(response => response.text())
             .then(data => {
-                // Insert the loaded content into the section
                 const section = document.getElementById(sectionId);
                 if (section) {
                     section.innerHTML = data;
-                    section.style.display = 'block'; // Show the section
+                    section.style.display = 'block';
                 }
 
                 // Execute scripts after the content is loaded
                 if (sectionId === 'content-sell') {
-                    // Load and execute the sell-form.js logic
                     const script = document.createElement('script');
                     script.src = 'sell-form.js';
-                    script.onload = () => {
-                        // Initialize sell-specific logic here
-                        initializeSellSection();
-                    };
+                    script.onload = () => initializeSellSection();
                     document.body.appendChild(script);
                 } else if (sectionId === 'content-home') {
-                    // Attach event listeners to "Add to Cart" buttons in home.html
                     const addToCartButtons = document.querySelectorAll('.add-to-cart');
                     addToCartButtons.forEach(button => {
                         button.addEventListener('click', function () {
@@ -58,12 +79,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Function to initialize sell section
     function initializeSellSection() {
-        // Add sell-specific logic here
         const sellForm = document.getElementById('sell-form');
         if (sellForm) {
             sellForm.addEventListener('submit', function (e) {
                 e.preventDefault();
-                // Handle form submission
                 alert('Sell form submitted');
             });
         }
@@ -73,7 +92,6 @@ document.addEventListener('DOMContentLoaded', function () {
     function showSection(sectionId) {
         hideAllSections();
 
-        // Load content dynamically based on the sectionId
         if (sectionId === 'content-home') {
             loadContent('home.html', sectionId);
         } else if (sectionId === 'content-sell') {
@@ -136,8 +154,18 @@ document.addEventListener('DOMContentLoaded', function () {
     handleHashChange();
 
     // Cart functionality
-    // Open/close cart drawer
+    // Open/close cart drawer with Firebase auth check
     document.querySelector('.cart').addEventListener('click', function () {
+        const user = firebase.auth().currentUser;
+        console.log("Current user:", user);
+
+        if (!user) {
+            // Redirect to login page if not logged in
+            window.location.href = 'login-register.html';
+            return;
+        }
+
+        // Toggle cart drawer if user is logged in
         cartDrawer.classList.toggle('open');
         overlay.classList.toggle('active');
         renderCartItems();
@@ -169,10 +197,17 @@ document.addEventListener('DOMContentLoaded', function () {
             image: productImage,
         };
 
-        cart.push(product);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartCount();
-        renderCartItems();
+        // Check if the product is already in the cart
+        const isProductInCart = cart.some(item => item.id === productId);
+
+        if (isProductInCart) {
+            alert('This item is already in your cart.');
+        } else {
+            cart.push(product);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCartItems();
+        }
     }
 
     // Update cart count
@@ -186,17 +221,14 @@ document.addEventListener('DOMContentLoaded', function () {
         let total = 0;
 
         if (cart.length === 0) {
-            // Show empty cart image and message
             document.querySelector('.empty-cart').style.display = 'block';
             document.querySelector('.proceed-to-checkout').style.display = 'none';
-            document.querySelector('.cart-total').style.display = 'none'; // Hide total
+            document.querySelector('.cart-total').style.display = 'none';
         } else {
-            // Hide empty cart image and message
             document.querySelector('.empty-cart').style.display = 'none';
             document.querySelector('.proceed-to-checkout').style.display = 'block';
-            document.querySelector('.cart-total').style.display = 'block'; // Show total
+            document.querySelector('.cart-total').style.display = 'block';
 
-            // Render cart items
             cart.forEach((item, index) => {
                 const cartItem = document.createElement('div');
                 cartItem.classList.add('cart-item');
@@ -228,15 +260,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Delete item from cart
     function deleteCartItem(index) {
-        cart.splice(index, 1); // Remove the item from the cart array
-        localStorage.setItem('cart', JSON.stringify(cart)); // Update localStorage
-        updateCartCount(); // Update the cart count in the header
-        renderCartItems(); // Re-render the cart items
+        cart.splice(index, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        renderCartItems();
     }
 
     // Proceed to checkout
     proceedToCheckoutButton.addEventListener('click', function () {
         alert('Proceeding to checkout...');
-        // Add your checkout logic here
+        window.location.href = 'checkout-details.html';
     });
 });

@@ -55,12 +55,12 @@
     }
 
     .product-image {
-      width: 100%;
-      height: 100%;
-      object-fit: contain; /* Ensure images fit within the container */
-      opacity: 0; /* Hide image until it's loaded */
-      transition: opacity 0.3s ease;
-    }
+  /* opacity: 0; */ /* Comment this out temporarily */
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: opacity 0.3s ease;
+  }
 
     .product-image.loaded {
       opacity: 1; /* Show image when it's loaded */
@@ -163,6 +163,7 @@
   </style>
 </head>
 <body>
+  
   <div class="product-container">
     <div class="product-grid">
       <!-- Product Cards -->
@@ -237,15 +238,7 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const productCards = document.querySelectorAll('.product-card');
-
-      // Redirect to product-details.html on product card click
-      productCards.forEach(card => {
-        card.addEventListener('click', function () {
-          const productId = this.getAttribute('data-id');
-          window.location.href = `product-details.html?id=${productId}`;
-        });
-      });
-
+  
       // Add to cart functionality
       const addToCartButtons = document.querySelectorAll('.add-to-cart');
       addToCartButtons.forEach(button => {
@@ -255,7 +248,8 @@
           addToCart(productId);
         });
       });
-
+  
+      // Function to add product to cart
       function addToCart(productId) {
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
         const product = { id: productId, name: `Product ${productId}`, price: 19.99 }; // Adjust as needed
@@ -263,6 +257,19 @@
         localStorage.setItem('cart', JSON.stringify(cart));
         console.log(`Product ${productId} added to cart. Cart length: ${cart.length}`);
       }
+  
+      // Handle image loading
+      const productImages = document.querySelectorAll('.product-image');
+      productImages.forEach(img => {
+        img.addEventListener('load', function () {
+          this.classList.add('loaded');
+        });
+        img.addEventListener('error', function () {
+          console.error('Image failed to load:', this.src);
+          // Optionally, you can set a placeholder image here
+          // this.src = 'path/to/placeholder-image.jpg';
+        });
+      });
     });
   </script>
 </body>

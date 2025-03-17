@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Successful</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .receipt-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #007bff;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .receipt-details {
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .receipt-details h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .receipt-details p {
+            font-size: 1rem;
+            color: #555;
+            margin: 0.5rem 0;
+        }
+
+        .receipt-details p strong {
+            color: #333;
+        }
+
+        .items-list {
+            margin-top: 1.5rem;
+        }
+
+        .item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 1rem;
+        }
+
+        .item-details {
+            flex: 1;
+        }
+
+        .item-name {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 0.25rem;
+        }
+
+        .item-price {
+            font-size: 0.9rem;
+            color: #007bff;
+        }
+
+        .total-amount {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #333;
+            margin-top: 1.5rem;
+        }
+
+        .reference-note {
+            font-size: 0.9rem;
+            color: #ff5722;
+            margin-top: 1rem;
+        }
+
+        .completed-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .completed-button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .receipt-container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .receipt-details h2 {
+                font-size: 1.25rem;
+            }
+
+            .receipt-details p {
+                font-size: 0.9rem;
+            }
+
+            .item-name {
+                font-size: 0.9rem;
+            }
+
+            .item-price {
+                font-size: 0.8rem;
+            }
+
+            .total-amount {
+                font-size: 1.1rem;
+            }
+
+            .reference-note {
+                font-size: 0.8rem;
+            }
+
+            .completed-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="receipt-container">
+        <h1>Order Successful 🎉</h1>
+        <div class="receipt-details">
+            <h2>Receipt</h2>
+            <p><strong>Name:</strong> <span id="receipt-name"></span></p>
+            <p><strong>Surname:</strong> <span id="receipt-surname"></span></p>
+            <p><strong>Phone:</strong> <span id="receipt-phone"></span></p>
+            <p><strong>Delivery Method:</strong> <span id="receipt-delivery"></span></p>
+            <p><strong>Address:</strong> <span id="receipt-address"></span></p>
+            <p><strong>Reference ID:</strong> <span id="receipt-reference"></span></p>
+        </div>
+        <div class="items-list">
+            <h2>Items Purchased</h2>
+            <div id="receipt-items">
+                <!-- Items will be dynamically rendered here -->
+            </div>
+            <div class="total-amount">
+                Total: $<span id="receipt-total"></span>
+            </div>
+        </div>
+        <p class="reference-note">Please screenshot this page for your reference.</p>
+        <button class="completed-button" onclick="goToIndex()">Completed</button>
+    </div>
+
+    <script>
+        // Retrieve data from localStorage
+        const receiptData = JSON.parse(localStorage.getItem('receiptData'));
+
+        // Populate receipt details if data exists
+        if (receiptData) {
+            document.getElementById('receipt-name').textContent = receiptData.name;
+            document.getElementById('receipt-surname').textContent = receiptData.surname;
+            document.getElementById('receipt-phone').textContent = receiptData.phone;
+            document.getElementById('receipt-delivery').textContent = receiptData.delivery === 'ship' ? 'Ship to Address' : 'Collection in Store';
+            document.getElementById('receipt-address').textContent = receiptData.delivery === 'ship' ? receiptData.address : 'N/A';
+            document.getElementById('receipt-reference').textContent = receiptData.reference;
+
+            // Render purchased items
+            const receiptItemsContainer = document.getElementById('receipt-items');
+            receiptData.cart.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.classList.add('item');
+                itemDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="item-details">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-price">$${item.price.toFixed(2)}</div>
+                    </div>
+                `;
+                receiptItemsContainer.appendChild(itemDiv);
+            });
+
+            // Display total amount
+            document.getElementById('receipt-total').textContent = receiptData.totalAmount.toFixed(2);
+        } else {
+            // Redirect to index.html if no receipt data is found
+            window.location.href = 'index.html';
+        }
+
+        // Function to redirect to index.html and clear navigation history
+        function goToIndex() {
+            localStorage.removeItem('receiptData'); // Clear receipt data
+            window.location.replace('index.html'); // Redirect and clear history
+        }
+    </script>
+</body>
+</html>

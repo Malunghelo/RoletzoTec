@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RGT - Real IT Solution</title>
     <link rel="stylesheet" href="cart.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
 </head>
 <body>
     <div class="top-bar">
@@ -35,7 +38,7 @@
           <button class="location-btn" id="locationButton">
             <span class="location-text">Thohoyandou Luvhego Complex Office 1</span>
             <img src="assets/icons/location.png" alt="location">
-        </button>
+            </button>
             <div class="cart">
                 <img src="assets/icons/grocery-store.png" alt="Cart Icon" class="cart-icon">
                 <p>0</p>
@@ -72,7 +75,7 @@
     </div>
     
     <!-- Link to the external JavaScript file -->
-    <script src="home.js"></script>
+    <script type="module" src="home.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
           document.getElementById("locationButton").addEventListener("click", function () {
@@ -84,6 +87,10 @@
               window.open(`https://www.google.com/maps?q=${latitude},${longitude}`, '_blank');
           });
       });
-  </script>
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+
 </body>
 </html>

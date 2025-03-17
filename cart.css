@@ -24,7 +24,7 @@ body {
     height: 4rem;
     background-color: #d6d6d6;
     border-radius: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     margin-top: 10px;
     display: flex;
     padding: 0px 20px;
@@ -272,12 +272,11 @@ select:hover {
     height: 100%;
     background: #fff;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-    transition: right 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    transition: right 0.2s cubic-bezier(0.68, 0, 0.0, 1.0);
     z-index: 1000;
     padding: 20px;
     overflow-y: auto;
 }
-
 .cart-drawer.open {
     right: 0;
 }
@@ -382,10 +381,18 @@ background-color: #218838;
     visibility: visible;
 }
 
-/* Cart Icon Animation */
 @keyframes cartBounce {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes cartScale {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+.cart.added {
+    animation: cartBounce 0.5s ease, cartScale 0.5s ease;
 }
 
 .cart {
@@ -394,9 +401,6 @@ background-color: #218838;
     transition: transform 0.3s ease;
 }
 
-.cart.added {
-    animation: cartBounce 0.5s ease;
-}
 /* Add hover and active link styling */
 .navbar a:hover,
 .navbar a.active {
