@@ -260,6 +260,7 @@ select:hover {
         width: 100%;
         height: auto;
         margin-bottom: 10px;
+        object-fit: contain;
     }
 }
 
@@ -320,7 +321,7 @@ border-bottom: 1px solid #eee;
 .cart-item img {
 width: 60px;
 height: 60px;
-object-fit: cover;
+object-fit: contain;
 margin-right: 15px;
 border-radius: 8px;
 }
