@@ -225,20 +225,25 @@ document.addEventListener('DOMContentLoaded', function () {
         window.addToCart = function(productId, productName, productPrice, productImage) {
             const existingItem = cart.find(item => item.id === productId);
 
-            if (existingItem) {
-                // If the item already exists in the cart, prevent adding it again
-                alert('This item is already in your cart.');
-                return; // Exit the function to prevent adding the item again
-            } else {
-                // If the item does not exist in the cart, add it
-                cart.push({
-                    id: productId,
-                    name: productName,
-                    price: productPrice,
-                    image: productImage,
-                    quantity: 1
-                });
-            }
+            // if (existingItem) {
+            //     existingItem.quantity += 1;
+            // } else {
+            //     cart.push({
+            //         id: productId,
+            //         name: productName,
+            //         price: productPrice,
+            //         image: productImage, // Ensure this is passed correctly
+            //         quantity: 1
+            //     });
+            // } 
+            
+            cart.push({
+                id: productId,
+                name: productName,
+                price: productPrice,
+                image: productImage,
+                quantity: 1 // Each new addition starts with a quantity of 1
+            });
 
             localStorage.setItem('cart', JSON.stringify(cart));
             updateCartCount();
@@ -285,7 +290,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     
         // Update the total price
-        cartTotalElement.textContent = `Total: R${total.toFixed(2)}`;
+        cartTotalElement.textContent = `${total.toFixed(2)}`;
     
         // Add event listeners to delete buttons
         const deleteButtons = document.querySelectorAll('.delete-item');

@@ -162,6 +162,11 @@ select:hover {
     color: white;
 }
 
+.legal-links {
+    flex-direction: row;
+    gap: 8px;
+}
+
 /* Mobile Styles */
 @media (max-width: 768px) {
     .top-bar {
@@ -172,6 +177,16 @@ select:hover {
         text-align: center;
     }
 
+    .legal-links {
+        flex-direction: column;
+        gap: 5px;
+        margin-top: 10px;
+    }
+
+    .legal-links a,
+    .legal-links span {
+        font-size: 12px;
+    }
     .header.shrink {
         height: 230px !important;
     }

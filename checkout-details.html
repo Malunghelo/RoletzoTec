@@ -242,6 +242,26 @@
                 height: 100px; /* Adjusted for smaller screens */
             }
         }
+
+        .location-details {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #c03c3c;
+        }
+
+        .location-details h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .location-details p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -268,6 +288,14 @@
                     <input type="text" id="address" placeholder="Physical Address">
                 </div>
                 <button type="submit">Proceed to Payment</button>
+
+                <!-- Location Details Section -->
+                <div id="location-details" class="location-details hidden">
+                    <h3>Store Location</h3>
+                    <p>Luvhego Complex Office 1</p>
+                    <p>Thohoyandou</p>
+                    <p>Phone: (+27) 76 309 9830</p>
+                </div>
             </form>
             <div id="loading-spinner" class="loading-spinner hidden"></div>
         </div>
@@ -310,6 +338,7 @@
 
         // DOM elements
         const checkoutForm = document.getElementById('checkout-form');
+        const locationDetails = document.getElementById('location-details');
         const addressField = document.getElementById('address-field');
         const deliveryOptions = document.querySelectorAll('input[name="delivery"]');
         const loadingSpinner = document.getElementById('loading-spinner');
@@ -344,15 +373,30 @@
             cartTotalElement.textContent = `Total: R${total.toFixed(2)}`;
         }
 
-        // Show/hide address field based on delivery option
+        // Show/hide address field and location details based on delivery option
         deliveryOptions.forEach(option => {
             option.addEventListener('change', () => {
+                console.log('Delivery option changed:', option.value);
                 if (option.value === 'ship') {
                     addressField.classList.remove('hidden');
+                    locationDetails.classList.add('hidden');
                 } else {
                     addressField.classList.add('hidden');
+                    locationDetails.classList.remove('hidden');
                 }
             });
+        });
+
+        // Initialize the visibility based on the default selected option
+        window.addEventListener('load', () => {
+            const selectedOption = document.querySelector('input[name="delivery"]:checked').value;
+            if (selectedOption === 'ship') {
+                addressField.classList.remove('hidden');
+                locationDetails.classList.add('hidden');
+            } else {
+                addressField.classList.add('hidden');
+                locationDetails.classList.remove('hidden');
+            }
         });
 
         // Handle form submission
