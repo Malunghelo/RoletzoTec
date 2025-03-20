@@ -31,7 +31,7 @@ body {
     padding: 0px 20px;
     align-items: center;
     justify-content: space-between;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added box shadow */
+    box-shadow: 0 4px 8px rgba(85, 85, 85, 0.1); /* Added box shadow */
 }
 
 .fa-solid {
@@ -50,7 +50,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     transition: height 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Added box shadow */
+    box-shadow: 0 4px 8px rgba(85, 85, 85, 0.1); /* Added box shadow */
 }
 
 .navbar {
@@ -164,6 +164,7 @@ ul li a:active {
         height: auto;
         padding: 10px;
         text-align: center;
+        box-shadow: 0 4px 8px rgba(85, 85, 85, 0.1);
     }
 
     .legal-links {
@@ -188,6 +189,7 @@ ul li a:active {
         transition: all 0.3s ease-in-out;
         height: 340px !important;
         width: 95%;
+        box-shadow: 0 4px 8px rgba(85, 85, 85, 0.1);
     }
 
     .navbar {
