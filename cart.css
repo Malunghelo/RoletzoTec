@@ -94,7 +94,7 @@ body {
     width: 100%;
     max-width: 500px;
     height: 50px;
-    background-color: #bebebe;
+    background-color: #d1d1d1;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -127,7 +127,7 @@ body {
 
 .cart {
     display: flex;
-    background-color: #bebebe;
+    background-color: #d1d1d1;
     justify-content: space-between;
     align-items: center;
     padding: 7px 10px;
@@ -213,15 +213,11 @@ ul li a:active {
         align-items: center;
     }
 
-    .dropdown, .search, .cart {
-        margin: 10px 0;
-    }
-
     .location-btn {
         width: 100%;
         max-width: 150px;
         height: 50px;
-        background-color: #bebebe;
+        background-color: #d1d1d1;
         border-radius: 10px;
         display: flex;
         align-items: center;
