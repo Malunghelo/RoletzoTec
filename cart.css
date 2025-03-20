@@ -229,6 +229,7 @@ ul li a:active {
         font-size: 14px;
         font-family: Arial, sans-serif;
         text-align: left;
+        margin-bottom: 10px;
     }
     
     .location-btn img {
