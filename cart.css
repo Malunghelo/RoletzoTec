@@ -162,6 +162,7 @@ ul li a:active {
     .top-bar {
         width: 95%;
         flex-direction: column;
+        margin-top: 15px;
         height: auto;
         padding: 10px;
         text-align: center;
