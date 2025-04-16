@@ -188,6 +188,7 @@ ul li a:active {
     }
 
     .header {
+        margin-top: 15px;
         transition: all 0.3s ease-in-out;
         height: 340px !important;
         width: 95%;
